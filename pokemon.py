@@ -4,10 +4,10 @@ from abc import abstractmethod
 
 class Pokemon(Status, Ataques):
 
-    def __init__(self, nome: str, vida: int, nivel: str, tipo) -> None:
-        super().__init__(nome, vida, nivel, tipo)
-        
-
-   # @abstractmethod
-   # def status_up(self, nivel):
-   #     pass
+    def __init__(self, nome: str, vida: int, nivel: str, tipo: str) -> None:
+        Status.__init__(self, nome, vida, nivel)
+        Ataques.__init__(self, tipo)
+    
+    @abstractmethod
+    def status_up(self, nivel):
+        pass

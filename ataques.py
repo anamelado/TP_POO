@@ -1,28 +1,34 @@
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Type
 from index import Pokemon
+from abc import ABC, abstractmethod
 
-class Ataques:
+class Ataques(ABC):
 
-    def __init__(self, nome:str, forca:int, tipo:str, pokemon:'Pokemon') -> None:
-        self.nome = nome
-        self.forca = forca
-        self.tipo = pokemon.tipo
+    def __init__(self, tipo: str) -> None:
+        self.atk_nome
+        self.forca 
+        self.__tipo = tipo
+        self.definir_ataque()
 
-    def tipo(self) -> None:
+    @property
+    def tipo(self):
+        return self.__tipo
+
+    def definir_ataque(self) -> None:
         if self.tipo == 'Elétrico':
-            self.nome = 'Choque do trovão'
+            self.atk_nome = 'Choque do trovão'
             self.forca = 10
         elif self.tipo == 'Água':
-            self.nome = 'Hidrobomba'
+            self.atk_nome = 'Hidrobomba'
             self.forca = 10
         elif self.tipo == 'Fogo':
-            self.nome = 'Lança-chamas'
+            self.atk_nome = 'Lança-chamas'
             self.forca = 10
         elif self.tipo == 'Pedra':
-            self.nome = 'Pedra afiada'
+            self.atk_nome = 'Pedra afiada'
             self.forca = 10
         elif self.tipo == 'Gelo':
-            self.nome = 'Vento congelante'
+            self.atk_nome = 'Vento congelante'
             self.forca = 10
 
     forca: Dict[tuple[str, str], float] = {
@@ -37,3 +43,7 @@ class Ataques:
         ('Gelo', 'Pedra'): 2.0,
         ('Gelo', 'Fogo'): 0.5
     }
+
+    @abstractmethod
+    def atacar(self, pokemon: Type[Pokemon]):
+        pass

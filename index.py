@@ -1,2 +1,2 @@
-from ataques import Ataques
-from pokemons import Pokemon
+from pokemon import Pokemon
+
