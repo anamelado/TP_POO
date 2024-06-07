@@ -1,8 +1,6 @@
 from typing import List, Dict, Union, Type
-from index import Pokemon
-from abc import ABC, abstractmethod
 
-class Ataques(ABC):
+class Ataques():
 
     def __init__(self, tipo: str) -> None:
         self.atk_nome
@@ -43,7 +41,3 @@ class Ataques(ABC):
         ('Gelo', 'Pedra'): 2.0,
         ('Gelo', 'Fogo'): 0.5
     }
-
-    @abstractmethod
-    def atacar(self, pokemon: Type[Pokemon]):
-        pass
