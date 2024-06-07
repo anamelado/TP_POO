@@ -31,7 +31,7 @@ class Ataques(ABC):
             self.atk_nome = 'Vento congelante'
             self.forca = 10
 
-    forca: Dict[tuple[str, str], float] = {
+    forca: Dict[Union[str, str], float] = {
         ('Elétrico', 'Água'): 2.0,
         ('Elétrico', 'Pedra'): 0.5,
         ('Fogo', 'Gelo'): 2.0,
