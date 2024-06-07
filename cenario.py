@@ -1,5 +1,5 @@
-from index import Pokemon
 import  random
+from pokemon import Pokemon
 
 class Trainer:
     def __init__(self, nome: str, pokemon: Pokemon):
@@ -13,60 +13,19 @@ class Trainer:
                 self.pokemon.atacar(outro_treinador.pokemon)
                 if outro_treinador.pokemon.vida <= 0:
                     print(f"{outro_treinador.nome}'s {outro_treinador.pokemon.nome} foi derrotado!")
+                    outro_treinador.pokemon = random.choice(outro_treinador.pokemon.lista_de_pokemons)  
+                    self.pokemon.subir_de_nivel()
                     break
                 outro_treinador.pokemon.atacar(self.pokemon)
                 if self.pokemon.vida <= 0:
                     print(f"{self.nome}'s {self.pokemon.nome} foi derrotado!")
                     break
+        else:
+            print("Um dos treinadores não tem Pokémon para batalhar!")
 
     def __str__(self):
         return f"Treinador {self.nome} com Pokémon: {self.pokemon}"
     
-    class Cenario:
-        def __init__(self, nome_treinador: str):
-            self.nome_treinador = nome_treinador
-            self.pokemons_predefinidos = [
-                Pokemon("Pikachu", 100, "5", "Elétrico"),
-                Pokemon("Piplup", 90, "5", "Água"),
-                Pokemon("Charmander", 85, "5", "Fogo"),
-                Pokemon("Squirtle", 95, "5", "Água"),
-                Pokemon("Geodude", 80, "5", "Pedra")
-        ]
-            self.inimigos = [
-                Pokemon("Onix", 120, "7", "Pedra"),
-                Pokemon("Gyarados", 110, "8", "Água"),
-                Pokemon("Arcanine", 100, "7", "Fogo"),
-                Pokemon("Jolteon", 90, "7", "Elétrico"),
-                Pokemon("Lapras", 95, "7", "Gelo")
-        ]
-
-    def escolher_pokemon(self):
-        print("Escolha seu Pokémon:")
-        for i, pokemon in enumerate(self.pokemons_predefinidos):
-            print(f"{i + 1}. {pokemon.nome} (Nível: {pokemon.nivel}, Vida: {pokemon.vida}, Tipo: {pokemon.tipo})")
-
-        escolha = int(input("Digite o número do Pokémon escolhido: ")) - 1
-        if escolha < 0 or escolha >= len(self.pokemons_predefinidos):
-            print("Escolha inválida!")
-            return self.escolher_pokemon()
-
-        pokemon_usuario = self.pokemons_predefinidos[escolha]
-        self.usuario = Trainer(self.nome_treinador, pokemon_usuario)
-
-    def iniciar_batalha(self):
-        pokemon_inimigo = random.choice(self.inimigos)
-        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
-
-        print("\nEstado inicial:")
-        print(self.usuario)
-        print(treinador_inimigo)
-
-        self.usuario.batalhar(treinador_inimigo)
-
-        print("\nEstado final:")
-        print(self.usuario)
-        print(treinador_inimigo)
-
 class Cenario:
     def __init__(self, nome_treinador: str):
         self.nome_treinador = nome_treinador
@@ -101,15 +60,16 @@ class Cenario:
         self.usuario = Trainer(self.nome_treinador, pokemon_usuario)
 
     def iniciar_batalha(self):
-        pokemon_inimigo = random.choice(self.inimigos)
-        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
+        while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) < self.max_nivel:
+            pokemon_inimigo = random.choice(self.inimigos)
+            treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
 
-        print("\nEstado inicial:")
-        print(self.usuario)
-        print(treinador_inimigo)
+            print("\nEstado inicial:")
+            print(self.usuario)
+            print(treinador_inimigo)
 
-        self.usuario.batalhar(treinador_inimigo)
+            self.usuario.batalhar(treinador_inimigo)
 
-        print("\nEstado final:")
-        print(self.usuario)
-        print(treinador_inimigo)
+            print("\nEstado final:")
+            print(self.usuario)
+            print(treinador_inimigo)
