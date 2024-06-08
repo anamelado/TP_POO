@@ -22,3 +22,4 @@ class Pokemon(Status, Ataques):
     def status_up(self, nivel):
         self.vida += int(nivel) * 5
         self.forca += int(nivel) * 2.5
+    #teste
