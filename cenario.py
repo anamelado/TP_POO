@@ -1,4 +1,4 @@
-import  random
+import random
 from pokemon import Pokemon
 
 class Trainer:
@@ -6,14 +6,14 @@ class Trainer:
         self.nome = nome
         self.pokemon = pokemon
 
-    def batalhar(self, outro_treinador: 'Trainer'):
+    def batalhar(self, cenario: 'Cenario'):
+        outro_treinador = cenario.novo_inimigo()
         if self.pokemon and outro_treinador.pokemon:
             print(f"Batalha entre {self.nome} e {outro_treinador.nome}!")
             while self.pokemon.vida > 0 and outro_treinador.pokemon.vida > 0:
                 self.pokemon.atacar(outro_treinador.pokemon)
                 if outro_treinador.pokemon.vida <= 0:
                     print(f"{outro_treinador.nome}'s {outro_treinador.pokemon.nome} foi derrotado!")
-                    outro_treinador.pokemon = random.choice(outro_treinador.pokemon.lista_de_pokemons)  
                     self.pokemon.subir_de_nivel()
                     break
                 outro_treinador.pokemon.atacar(self.pokemon)
@@ -24,25 +24,25 @@ class Trainer:
             print("Um dos treinadores não tem Pokémon para batalhar!")
 
     def __str__(self):
-        return f"Treinador {self.nome} com Pokémon: {self.pokemon}"
+        return f"Treinador {self.nome} com Pokémon: {self.pokemon.nome}"
     
 class Cenario:
-    max_nivel = 10
+    max_nivel = 3
     def __init__(self, nome_treinador: str):
         self.nome_treinador = nome_treinador
         self.pokemons_predefinidos = [
-            Pokemon("Pikachu", 100, "5", "Elétrico"),
-            Pokemon("Bulbasaur", 90, "5", "Água"),
-            Pokemon("Charmander", 85, "5", "Fogo"),
-            Pokemon("Squirtle", 95, "5", "Água"),
-            Pokemon("Eevee", 80, "5", "Pedra")
+            Pokemon("Pikachu", 100, "1", "Elétrico"),
+            Pokemon("Bulbasaur", 90, "1", "Água"),
+            Pokemon("Charmander", 85, "1", "Fogo"),
+            Pokemon("Squirtle", 95, "1", "Água"),
+            Pokemon("Eevee", 80, "1", "Pedra")
         ]
         self.inimigos = [
-            Pokemon("Onix", 120, "7", "Pedra"),
-            Pokemon("Gyarados", 110, "8", "Água"),
-            Pokemon("Arcanine", 100, "7", "Fogo"),
-            Pokemon("Jolteon", 90, "7", "Elétrico"),
-            Pokemon("Lapras", 95, "7", "Gelo")
+            Pokemon("Onix", 1, "7", "Pedra"),
+            Pokemon("Gyarados", 1, "8", "Água"),
+            Pokemon("Arcanine", 1, "7", "Fogo"),
+            Pokemon("Jolteon", 1, "7", "Elétrico"),
+            Pokemon("Lapras", 1, "7", "Gelo")
         ]
         self.escolher_pokemon()
         self.iniciar_batalha()
@@ -60,20 +60,18 @@ class Cenario:
         pokemon_usuario = self.pokemons_predefinidos[escolha]
         self.usuario = Trainer(self.nome_treinador, pokemon_usuario)
 
+    def novo_inimigo(self):
+        pokemon_inimigo = random.choice(self.inimigos)
+        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
+        return treinador_inimigo
+
     def iniciar_batalha(self):
         while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) < self.max_nivel:
-            pokemon_inimigo = random.choice(self.inimigos)
-            treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
-
-            print("\nEstado inicial:")
+            print("\n \n")
             print(self.usuario)
-            print(treinador_inimigo)
-
-            self.usuario.batalhar(treinador_inimigo)
-
-            print("\nEstado final:")
-            print(self.usuario)
-            print(treinador_inimigo)
+            
+            self.usuario.batalhar(self)
+        print("Você venceu !")
 
 
-Cenario("Joao")
+cenario = Cenario("Joao")
