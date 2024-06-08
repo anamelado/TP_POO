@@ -1,10 +1,10 @@
-from typing import List, Dict, Union, Type
+from typing import  Dict, Union
 
 class Ataques():
 
     def __init__(self, tipo: str) -> None:
-        self.atk_nome
-        self.forca 
+        self.atk_nome = ''
+        self.forca = 0
         self.__tipo = tipo
         self.definir_ataque()
 
