@@ -14,12 +14,11 @@ class Pokemon(Status, Ataques):
         self.status_up(self.nivel)
     
     def atacar(self, pokemon: Type['Pokemon']):
-       # fator = self.forca.get((self.tipo, pokemon.tipo), 1.0)
-       # dano = self.forca * fator
-        pokemon.vida -= self.forca
+        fator = self.multiplicador.get((self.tipo, pokemon.tipo), 1.0)
+        dano = self.forca * fator
+        pokemon.vida -= dano
         print(f"{self.nome} atacou {pokemon.nome} com {self.atk_nome}! {pokemon.nome} agora tem {pokemon.vida} de vida.")
 
     def status_up(self, nivel):
         self.vida += int(nivel) * 5
         self.forca += int(nivel) * 2.5
-    #teste

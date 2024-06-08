@@ -1,6 +1,18 @@
-from typing import  Dict, Union
+from typing import Dict, Tuple
 
 class Ataques():
+    multiplicador: Dict[Tuple[str, str], float] = {
+        ('Elétrico', 'Água'): 2.0,
+        ('Elétrico', 'Pedra'): 0.5,
+        ('Fogo', 'Gelo'): 2.0,
+        ('Fogo', 'Água'): 0.5,
+        ('Água', 'Fogo'): 2.0,
+        ('Água', 'Elétrico'): 0.5,
+        ('Pedra', 'Elétrico'): 2.0,
+        ('Pedra', 'Gelo'): 0.5,
+        ('Gelo', 'Pedra'): 2.0,
+        ('Gelo', 'Fogo'): 0.5
+    }
 
     def __init__(self, tipo: str) -> None:
         self.atk_nome = ''
@@ -29,15 +41,3 @@ class Ataques():
             self.atk_nome = 'Vento congelante'
             self.forca = 10
 
-    forca: Dict[Union[str, str], float] = {
-        ('Elétrico', 'Água'): 2.0,
-        ('Elétrico', 'Pedra'): 0.5,
-        ('Fogo', 'Gelo'): 2.0,
-        ('Fogo', 'Água'): 0.5,
-        ('Água', 'Fogo'): 2.0,
-        ('Água', 'Elétrico'): 0.5,
-        ('Pedra', 'Elétrico'): 2.0,
-        ('Pedra', 'Gelo'): 0.5,
-        ('Gelo', 'Pedra'): 2.0,
-        ('Gelo', 'Fogo'): 0.5
-    }

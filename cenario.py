@@ -71,7 +71,9 @@ class Cenario:
             print(self.usuario)
             
             self.usuario.batalhar(self)
-        print("Você venceu !")
-
+        if self.usuario.pokemon.vida == 0 :
+            print ("Derrota!")
+        else:
+            print("Vitoria!")
 
 cenario = Cenario("Joao")
