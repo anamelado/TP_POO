@@ -27,6 +27,7 @@ class Trainer:
         return f"Treinador {self.nome} com Pokémon: {self.pokemon}"
     
 class Cenario:
+    max_nivel = 10
     def __init__(self, nome_treinador: str):
         self.nome_treinador = nome_treinador
         self.pokemons_predefinidos = [
@@ -73,3 +74,6 @@ class Cenario:
             print("\nEstado final:")
             print(self.usuario)
             print(treinador_inimigo)
+
+
+Cenario("Joao")
