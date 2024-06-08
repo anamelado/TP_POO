@@ -1,79 +1,73 @@
-import random
-from pokemon import Pokemon
+import random                                                                                               # Importa o módulo random para gerar números aleatórios
+from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
 
 class Trainer:
     def __init__(self, nome: str, pokemon: Pokemon):
-        self.nome = nome
-        self.pokemon = pokemon
+        self.nome = nome                                                                                    # Define o nome do treinador
+        self.pokemon = pokemon                                                                              # Define o Pokémon do treinador
 
-    def batalhar(self, cenario: 'Cenario'):
-        outro_treinador = cenario.novo_inimigo()
-        if self.pokemon and outro_treinador.pokemon:
-            print(f"Batalha entre {self.nome} e {outro_treinador.nome}!")
-            while self.pokemon.vida > 0 and outro_treinador.pokemon.vida > 0:
-                self.pokemon.atacar(outro_treinador.pokemon)
-                if outro_treinador.pokemon.vida <= 0:
-                    print(f"{outro_treinador.nome}'s {outro_treinador.pokemon.nome} foi derrotado!")
-                    self.pokemon.subir_de_nivel()
-                    break
-                outro_treinador.pokemon.atacar(self.pokemon)
-                if self.pokemon.vida <= 0:
-                    print(f"{self.nome}'s {self.pokemon.nome} foi derrotado!")
-                    break
+    def batalhar(self, cenario: 'Cenario'):                                                                 # Define o método de batalha do treinador
+        outro_treinador = cenario.novo_inimigo()                                                            # Obtém um novo treinador inimigo do cenário
+        if self.pokemon and outro_treinador.pokemon:                                                        # Verifica se ambos os treinadores possuem Pokémon
+            print(f"Batalha entre {self.nome} e {outro_treinador.nome}!")                                   # Imprime uma mensagem sobre a batalha
+            while self.pokemon.vida > 0 and outro_treinador.pokemon.vida > 0:                               # Enquanto os Pokémon estiverem vivos
+                self.pokemon.atacar(outro_treinador.pokemon)                                                # O Pokémon do treinador ataca o Pokémon do outro treinador
+                if outro_treinador.pokemon.vida <= 0:                                                       # Se o Pokémon do outro treinador for derrotado
+                    print(f"{outro_treinador.nome}'s {outro_treinador.pokemon.nome} foi derrotado!")        # Imprime uma mensagem de derrota do inimigo
+                    self.pokemon.subir_de_nivel()                                                           # O Pokémon do treinador sobe de nível
+                    break                                                                                   # Sai do loop de batalha
+                outro_treinador.pokemon.atacar(self.pokemon)                                                # O Pokémon do outro treinador ataca o Pokémon do treinador
+                if self.pokemon.vida <= 0:                                                                  # Se o Pokémon do treinador for derrotado
+                    print(f"{self.nome}'s {self.pokemon.nome} foi derrotado!")                              # Imprime uma mensagem de derrota do treinador
+                    break                                                                                   # Sai do loop de batalha
         else:
-            print("Um dos treinadores não tem Pokémon para batalhar!")
+            print("Um dos treinadores não tem Pokémon para batalhar!")                                      # Imprime uma mensagem caso um dos treinadores não tenha Pokémon
 
     def __str__(self):
-        return f"Treinador {self.nome} com Pokémon: {self.pokemon.nome}"
-    
+        return f"Treinador {self.nome} com Pokémon: {self.pokemon.nome}"                                    # Define a representação em string do treinador
+
 class Cenario:
-    max_nivel = 3
+    max_nivel = 3                                                                                           # Define o nível máximo para a batalha
+
     def __init__(self, nome_treinador: str):
-        self.nome_treinador = nome_treinador
-        self.pokemons_predefinidos = [
+        self.nome_treinador = nome_treinador                                                                # Define o nome do treinador
+        self.pokemons_predefinidos = [                                                                      # Lista de Pokémon pré-definidos para o jogador escolher
             Pokemon("Pikachu", 100, "1", "Elétrico"),
             Pokemon("Bulbasaur", 90, "1", "Água"),
             Pokemon("Charmander", 85, "1", "Fogo"),
             Pokemon("Squirtle", 95, "1", "Água"),
             Pokemon("Eevee", 80, "1", "Pedra")
         ]
-        self.inimigos = [
+        self.inimigos = [                                                                                   # Lista de inimigos
             Pokemon("Onix", 1, "7", "Pedra"),
             Pokemon("Gyarados", 1, "8", "Água"),
             Pokemon("Arcanine", 1, "7", "Fogo"),
             Pokemon("Jolteon", 1, "7", "Elétrico"),
             Pokemon("Lapras", 1, "7", "Gelo")
         ]
-        self.escolher_pokemon()
-        self.iniciar_batalha()
+        self.escolher_pokemon()                                                                             # Chama o método para o jogador escolher seu Pokémon
+        self.iniciar_batalha()                                                                              # Inicia a batalha
 
     def escolher_pokemon(self):
-        print("Escolha seu Pokémon:")
+        print("Escolha seu Pokémon:")                                                                               # Imprime uma mensagem para o jogador escolher seu Pokémon
         for i, pokemon in enumerate(self.pokemons_predefinidos):
-            print(f"{i + 1}. {pokemon.nome} (Nível: {pokemon.nivel}, Vida: {pokemon.vida}, Tipo: {pokemon.tipo})")
+            print(f"{i + 1}. {pokemon.nome} (Nível: {pokemon.nivel}, Vida: {pokemon.vida}, Tipo: {pokemon.tipo})")  # Mostra as opções de Pokémon disponíveis
 
-        escolha = int(input("Digite o número do Pokémon escolhido: ")) - 1
-        if escolha < 0 or escolha >= len(self.pokemons_predefinidos):
-            print("Escolha inválida!")
-            return self.escolher_pokemon()
+        escolha = int(input("Digite o número do Pokémon escolhido: ")) - 1                                          # Obtém a escolha do jogador
+        if escolha < 0 or escolha >= len(self.pokemons_predefinidos):                                               # Verifica se a escolha é válida
+            print("Escolha inválida!")                                                                              # Imprime uma mensagem de escolha inválida
+            return self.escolher_pokemon()                                                                          # Chama recursivamente o método para o jogador escolher novamente
 
-        pokemon_usuario = self.pokemons_predefinidos[escolha]
-        self.usuario = Trainer(self.nome_treinador, pokemon_usuario)
+        pokemon_usuario = self.pokemons_predefinidos[escolha]                                                       # Obtém o Pokémon escolhido pelo jogador
+        self.usuario = Trainer(self.nome_treinador, pokemon_usuario)                                                # Cria o treinador com o Pokémon escolhido pelo jogador
 
     def novo_inimigo(self):
-        pokemon_inimigo = random.choice(self.inimigos)
-        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
-        return treinador_inimigo
+        pokemon_inimigo = random.choice(self.inimigos)                                                              # Escolhe um inimigo aleatório
+        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)                                                     # Cria um treinador inimigo com o Pokémon escolhido aleatoriamente
+        return treinador_inimigo                                                                                    # Retorna o treinador inimigo
 
     def iniciar_batalha(self):
-        while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) < self.max_nivel:
+        while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) < self.max_nivel:                   # Enquanto o Pokémon do jogador estiver vivo e não atingir o nível máximo
             print("\n \n")
-            print(self.usuario)
-            
-            self.usuario.batalhar(self)
-        if self.usuario.pokemon.vida == 0 :
-            print ("Derrota!")
-        else:
-            print("Vitoria!")
-
-cenario = Cenario("Joao")
+            print(self.usuario)                                                                                     # Mostra o estado atual do treinador e do Pokémon
+            self.usuario.batalhar(self) 
