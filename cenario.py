@@ -1,13 +1,14 @@
 import random                                                                                               # Importa o módulo random para gerar números aleatórios
 from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
 
+
 class Trainer:
     def __init__(self, nome: str, pokemon: Pokemon) -> None:
         self.nome = nome                                                                                    # Define o nome do treinador
         self.pokemon = pokemon                                                                              # Define o Pokémon do treinador
 
     def batalhar(self, cenario: 'Cenario') -> None:                                                         # Define o método de batalha do treinador
-        outro_treinador = cenario.novo_inimigo()                                                            # Obtém um novo treinador inimigo do cenário
+        outro_treinador = cenario.novo_inimigo()                                                            # Obtém um novo treinador inimigo do cenário 
         if self.pokemon and outro_treinador.pokemon:                                                        # Verifica se ambos os treinadores possuem Pokémon
             print(f"Batalha entre {self.nome} e {outro_treinador.nome}!")                                   # Imprime uma mensagem sobre a batalha
             while self.pokemon.vida > 0 and outro_treinador.pokemon.vida > 0:                               # Enquanto os Pokémon estiverem vivos
@@ -27,7 +28,16 @@ class Trainer:
         return f"Treinador {self.nome} com Pokémon: {self.pokemon.nome}"                                    # Define a representação em string do treinador
 
 class Cenario:
-    max_nivel = 3                                                                                         # Define o nível máximo para a batalha
+    
+    while True:
+        try:
+            qnt_pokemons = int(input(f"Você quer batalhar contra quantos pokémons? "))
+            if 1 <= qnt_pokemons <= 100:
+                break
+            else:
+                print("Erro. Digite um número de 1 a 5.")
+        except ValueError:
+            print("Entrada inválida. Digite um número inteiro de 1 a 5.")                                                                                
 
     def __init__(self, nome_treinador: str) -> None:
         self.nome_treinador = nome_treinador                                                                # Define o nome do treinador
@@ -38,13 +48,16 @@ class Cenario:
             Pokemon("Squirtle", 95, "1", "Água"),
             Pokemon("Eevee", 80, "1", "Pedra")
         ]
-        self.inimigos = [                                                                                   # Lista de inimigos
+        self.inimigos_disponiveis = [                                                                                   # Lista de inimigos
             Pokemon("Onix", 50, "7", "Pedra"),
             Pokemon("Gyarados", 50, "8", "Água"),
             Pokemon("Arcanine", 50, "7", "Fogo"),
             Pokemon("Jolteon", 50, "7", "Elétrico"),
             Pokemon("Lapras", 50, "7", "Gelo")
         ]
+
+        self.inimigos_utilizados = []
+
         self.escolher_pokemon()                                                                             # Chama o método para o jogador escolher seu Pokémon
         self.iniciar_batalha()                                                                              # Inicia a batalha
 
@@ -62,14 +75,32 @@ class Cenario:
         self.usuario = Trainer(self.nome_treinador, pokemon_usuario)                                                # Cria o treinador com o Pokémon escolhido pelo jogador
 
     def novo_inimigo(self) -> Trainer:
-        pokemon_inimigo = random.choice(self.inimigos)                                                              # Escolhe um inimigo aleatório
-        treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)                                                     # Cria um treinador inimigo com o Pokémon escolhido aleatoriamente
-        return treinador_inimigo                                                                                    # Retorna o treinador inimigo
+        if not self.inimigos_disponiveis:
+            return Trainer("x", random.choice(self.inimigos_utilizados))
+        else:
+            pokemon_inimigo = random.choice(self.inimigos_disponiveis)
+            self.inimigos_disponiveis.remove(pokemon_inimigo)  # Remove o inimigo escolhido da lista disponível
+            treinador_inimigo = Trainer("Inimigo", pokemon_inimigo)
+            self.inimigos_utilizados.append(treinador_inimigo)  # Adiciona o inimigo utilizado na lista de utilizados
+            return treinador_inimigo        
 
     def iniciar_batalha(self) -> None:
-        while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) < self.max_nivel:               # Enquanto o Pokémon do jogador estiver vivo e não atingir o nível máximo
+        while self.usuario.pokemon.vida > 0 and int(self.usuario.pokemon.nivel) <= self.qnt_pokemons and self.inimigos_disponiveis:               # Enquanto o Pokémon do jogador estiver vivo e não atingir o nível máximo
             print("\n \n")
             print(self.usuario)                                                                                     # Mostra o estado atual do treinador e do Pokémon
-            self.usuario.batalhar(self) 
+            self.usuario.batalhar(self)
+        
+        self.fim_de_jogo() 
 
-Cenario = Cenario("Jogador")
+    def fim_de_jogo(self):
+        if self.usuario.pokemon.vida <= 0:
+            print(f"\n{self.usuario.pokemon.nome} está com {self.usuario.pokemon.vida} de vida. Você perdeu a batalha. \nFim de jogo.")
+        elif int(self.usuario.pokemon.nivel) > self.qnt_pokemons:
+            print(f"\n{self.usuario.pokemon.nome} atingiu o nível máximo de {self.usuario.pokemon.nivel}! A batalha se encerra aqui. \nFim de jogo.")
+        elif not self.inimigos_disponiveis:
+            print(f"\nTodos os inimigos foram derrotados. Parabéns! \nVitória do {self.usuario.nome}")
+        else:
+            print("Erro. Fim de jogo.")
+
+
+Cenario("Jogador")
