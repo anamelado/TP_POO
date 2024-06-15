@@ -35,9 +35,9 @@ class Cenario:
             if 1 <= qnt_pokemons <= 100:
                 break
             else:
-                print("Erro. Digite um número de 1 a 5.")
+                print("Erro. Digite um número de 1 a 100.")
         except ValueError:
-            print("Entrada inválida. Digite um número inteiro de 1 a 5.")                                                                                
+            print("Entrada inválida. Digite um número inteiro de 1 a 100.")                                                                                
 
     def __init__(self, nome_treinador: str) -> None:
         self.nome_treinador = nome_treinador                                                                # Define o nome do treinador
