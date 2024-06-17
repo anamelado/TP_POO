@@ -1,6 +1,6 @@
 from cenario import Cenario
 
-def main():
+def main() -> None:
     while True:
         nome_jogador = input("Digite o seu nome de jogador: ")
         if nome_jogador.strip():  
