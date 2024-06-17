@@ -92,7 +92,7 @@ class Cenario:
         
         self.fim_de_jogo() 
 
-    def fim_de_jogo(self):
+    def fim_de_jogo(self) -> None:
         if self.usuario.pokemon.vida <= 0:
             print(f"\n{self.usuario.pokemon.nome} está com {self.usuario.pokemon.vida} de vida. Você perdeu a batalha. \nFim de jogo.")
         elif int(self.usuario.pokemon.nivel) > self.qnt_pokemons:
