@@ -1,5 +1,5 @@
 from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
-
+from cenario import Cenario
 
 class Trainer:
     def __init__(self, nome: str, pokemon: Pokemon) -> None:
