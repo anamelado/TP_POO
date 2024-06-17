@@ -2,17 +2,7 @@ import random                                                                   
 from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
 from trainer import Trainer
 
-class Cenario:
-    
-   # while True:
-       # try:
-        #    qnt_pokemons = int(input(f"Você quer batalhar contra quantos pokémons? "))
-         #   if 1 <= qnt_pokemons <= 100:
-          #      break
-           # else:
-            #    print("Erro. Digite um número de 1 a 100.")
-       # except ValueError:
-        #    print("Entrada inválida. Digite um número inteiro de 1 a 100.")                                                                                
+class Cenario:                                                                            
 
     def __init__(self, nome_treinador: str) -> None:
         self.nome_treinador = nome_treinador                                                                # Define o nome do treinador
@@ -60,7 +50,7 @@ class Cenario:
             self.inimigos_utilizados.append(treinador_inimigo)  # Adiciona o inimigo utilizado na lista de utilizados
             return treinador_inimigo        
 
-    def definir_qnt_pokemons(self):
+    def definir_qnt_pokemons(self) -> int:
         while True:
             try:
                 qnt = int(input(f"Você quer batalhar contra quantos pokémons? "))
