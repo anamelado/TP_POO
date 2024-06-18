@@ -1,6 +1,6 @@
 import random                                                                                               # Importa o módulo random para gerar números aleatórios
 from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 if TYPE_CHECKING:
     from trainer import Trainer
@@ -12,7 +12,7 @@ class Cenario:
         self.qnt_pokemons = self.definir_qnt_pokemons()
         self.pokemons_predefinidos = [                                                                      # Lista de Pokémon pré-definidos para o jogador escolher
             Pokemon("Pikachu", 100, "1", "Elétrico"),
-            Pokemon("Bulbasaur", 90, "1", "Água"),
+            Pokemon("Lapras", 80, "1", "Gelo"),
             Pokemon("Charmander", 85, "1", "Fogo"),
             Pokemon("Squirtle", 95, "1", "Água"),
             Pokemon("Eevee", 80, "1", "Pedra")
@@ -44,7 +44,7 @@ class Cenario:
         pokemon_usuario = self.pokemons_predefinidos[escolha]                                                       # Obtém o Pokémon escolhido pelo jogador
         self.usuario = Trainer(self.nome_treinador, pokemon_usuario)                                                # Cria o treinador com o Pokémon escolhido pelo jogador
 
-    def novo_inimigo(self) -> type['Trainer']:
+    def novo_inimigo(self) -> Type['Trainer']:
         from trainer import Trainer
         if not self.inimigos_disponiveis:
             return Trainer("x", random.choice(self.inimigos_utilizados))
