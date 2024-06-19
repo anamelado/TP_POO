@@ -25,7 +25,7 @@ class Ataques():                                                                
         self.definir_ataque()                                                                           # Chama o método definir_ataque para configurar o nome e a força do ataque
 
     @property                                                                                           # Define um método getter (propriedade) para acessar o tipo de ataque
-    def tipo(self):
+    def tipo(self) -> str:
         """
         :return: Retorna o tipo de ataque (atributo privado)
         """
