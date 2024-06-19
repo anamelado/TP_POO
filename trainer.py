@@ -3,10 +3,17 @@ from cenario import Cenario
 
 class Trainer:
     def __init__(self, nome: str, pokemon: Pokemon) -> None:
+        """
+        :param nome: Nome do treinador
+        :param pokemon: Instância da classe Pokemon
+        """
         self.nome = nome                                                                                    # Define o nome do treinador
         self.pokemon = pokemon                                                                              # Define o Pokémon do treinador
 
     def batalhar(self, cenario: 'Cenario') -> None:                                                         # Define o método de batalha do treinador
+        """
+        :param cenario: Instância da classe Cenario, representando o cenário da batalha
+        """
         outro_treinador = cenario.novo_inimigo()                                                            # Obtém um novo treinador inimigo do cenário 
         if self.pokemon and outro_treinador.pokemon:                                                        # Verifica se ambos os treinadores possuem Pokémon
             print(f"Batalha entre {self.nome} e {outro_treinador.nome}!")                                   # Imprime uma mensagem sobre a batalha
@@ -24,4 +31,7 @@ class Trainer:
             print("Um dos treinadores não tem Pokémon para batalhar.")                                      # Imprime uma mensagem caso um dos treinadores não tenha Pokémon
 
     def __str__(self) -> str:
+        """
+        :return: Retorna uma representação em string do treinador
+        """
         return f"Treinador {self.nome} com Pokémon: {self.pokemon.nome}"                                    # Define a representação em string do treinador
