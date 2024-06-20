@@ -14,15 +14,12 @@ class Pokemon(InterfacePokemon, Status, Ataques):
         self.vida = self.vida_base
         self.status_up(self.nivel)
 
-    def atacar(self, pokemon: Type['InterfacePokemon'], indice_ataque: int):
-        if 0 <= indice_ataque < 2:
-            self.definir_ataque(indice_ataque)
+    def atacar(self, pokemon: Type['InterfacePokemon']):
+            self.definir_ataque()
             fator = self.multiplicador.get((self.tipo, pokemon.tipo), 1.0)
             dano = self.forca * fator
             pokemon.vida -= dano
             print(f"{self.nome} usou {self.atk_nome}! {pokemon.nome} agora tem {pokemon.vida} de vida.")
-        else:
-            print(f"Índice de ataque inválido: {indice_ataque}")
 
     def status_up(self, nivel):
         self.vida += int(nivel) * 5
