@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from InterfaceTrainer import InterfaceTrainer
 
 class InterfaceCenario(ABC):
     @abstractmethod
@@ -7,7 +6,7 @@ class InterfaceCenario(ABC):
         pass
 
     @abstractmethod
-    def novo_inimigo(self) -> 'InterfaceTrainer':
+    def novo_inimigo(self):
         pass
 
     @abstractmethod

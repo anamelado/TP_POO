@@ -1,9 +1,9 @@
 from typing import Type
-from InterfaceAtaque import InterfaceAtaques
+from ataques import Ataques
 from status import Status
 from InterfacePokemon import InterfacePokemon
 
-class Pokemon(InterfacePokemon, Status, InterfaceAtaques):
+class Pokemon(InterfacePokemon, Status, Ataques):
 
     def __init__(self, nome: str, vida: int, nivel: str, tipo: str) -> None:
         Status.__init__(self, nome, vida, nivel)
