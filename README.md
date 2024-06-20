@@ -60,4 +60,4 @@ A classe `Trainer` representa um treinador de Pokémon e possui métodos para ba
 A classe `Cenario` define o cenário de batalha, permitindo que o jogador escolha um Pokémon e enfrente treinadores inimigos. A interface `InterfaceCenario` garante que qualquer cenário implemente métodos para escolher Pokémon, gerar novos inimigos e iniciar batalhas.
 
 ## Contato
-Para quaisquer dúvidas ou sugestões, entre em contato com seu-email@dominio.com.
+Para quaisquer dúvidas ou sugestões, entre em contato com anamelado@ufmg.br, jvvls@ufmg.br ou luciahrscapanema@ufmg.br.
