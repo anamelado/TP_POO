@@ -1,41 +1,29 @@
-from ataques import Ataques                                                                 # Importa a classe Ataques do arquivo ataques.py
-from status import Status                                                                   # Importa a classe Status do arquivo status.py
-from typing import Type                                                                     # Importa o tipo Type do módulo typing
+from typing import Type
+from InterfaceAtaque import InterfaceAtaques
+from status import Status
+from InterfacePokemon import InterfacePokemon
 
-class Pokemon(Status, Ataques):                                                             # Define a classe Pokemon como uma subclasse de Status e Ataques
-    
-    def __init__(self, nome: str, vida: int, nivel: str, tipo: str) -> None:                # Define o método de inicialização da classe Pokemon
-        """
-        :param nome: Nome do Pokémon
-        :param vida: Vida do Pokémon
-        :param nivel: Nível do Pokémon
-        :param tipo: Tipo do Pokémon
-        """
-        Status.__init__(self, nome, vida, nivel)                                            # Chama o método de inicialização da classe Status
-        Ataques.__init__(self, tipo)                                                        # Chama o método de inicialização da classe Ataques
-    
-    def subir_de_nivel(self) -> None:                                                       # Define o método subir_de_nivel
-        """
-        Aumenta o nível do Pokémon, reseta a vida para o valor base e atualiza os atributos do Pokémon conforme o novo nível.
-        """
-        self.nivel = str(int(self.nivel) + 1)                                               # Aumenta o nível do Pokémon em 1
-        self.vida = self.vida_base                                                          # Reseta a vida do Pokémon para o valor base
-        self.status_up(self.nivel)                                                          # Chama o método status_up para atualizar os atributos do Pokémon conforme o novo nível
-    
-    def atacar(self, pokemon: Type['Pokemon']) -> None:                                     # Define o método atacar
-        """
-        :param pokemon: Instância de um objeto da classe Pokemon que será atacado
-        Calcula o dano do ataque com base nos tipos dos Pokémon e reduz a vida do Pokémon adversário.
-        """
-        fator = self.multiplicador.get((self.tipo, pokemon.tipo), 1.0)                      # Calcula o fator de multiplicação do ataque com base nos tipos dos Pokémon
-        dano = self.forca * fator                                                           # Calcula o dano do ataque
-        pokemon.vida -= dano                                                                # Reduz a vida do Pokémon adversário de acordo com o dano causado
-        print(f"{self.nome} atacou {pokemon.nome} com {self.atk_nome}! {pokemon.nome} agora tem {pokemon.vida} de vida.")  # Imprime uma mensagem sobre o ataque realizado
-    
-    def status_up(self, nivel) -> None:                                                     # Define o método status_up
-        """
-        :param nivel: Novo nível do Pokémon
-        Aumenta a vida e a força do Pokémon com base no novo nível.
-        """
-        self.vida += int(nivel) * 5                                                         # Aumenta a vida do Pokémon com base no novo nível
-        self.forca += int(nivel) * 2.5                                                      # Aumenta a força do Pokémon com base no novo nível
+class Pokemon(InterfacePokemon, Status, InterfaceAtaques):
+
+    def __init__(self, nome: str, vida: int, nivel: str, tipo: str) -> None:
+        Status.__init__(self, nome, vida, nivel)
+        Ataques.__init__(self, tipo)
+
+    def subir_de_nivel(self):
+        self.nivel = str(int(self.nivel) + 1)
+        self.vida = self.vida_base
+        self.status_up(self.nivel)
+
+    def atacar(self, pokemon: Type['InterfacePokemon'], indice_ataque: int):
+        if 0 <= indice_ataque < 2:
+            self.definir_ataque(indice_ataque)
+            fator = self.multiplicador.get((self.tipo, pokemon.tipo), 1.0)
+            dano = self.forca * fator
+            pokemon.vida -= dano
+            print(f"{self.nome} usou {self.atk_nome}! {pokemon.nome} agora tem {pokemon.vida} de vida.")
+        else:
+            print(f"Índice de ataque inválido: {indice_ataque}")
+
+    def status_up(self, nivel):
+        self.vida += int(nivel) * 5
+        self.forca += int(nivel) * 2.5

@@ -1,8 +1,9 @@
-from pokemon import Pokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
-from cenario import Cenario
+from InterfacePokemon import InterfacePokemon                                                                                 # Importa a classe Pokemon do arquivo pokemon.py
+from InterfaceCenario import InterfaceCenario
+from InterfaceTrainer import InterfaceTrainer
 
-class Trainer:
-    def __init__(self, nome: str, pokemon: Pokemon) -> None:
+class Trainer(InterfaceTrainer):
+    def __init__(self, nome: str, pokemon: InterfacePokemon) -> None:
         """
         :param nome: Nome do treinador
         :param pokemon: Instância da classe Pokemon
@@ -10,7 +11,7 @@ class Trainer:
         self.nome = nome                                                                                    # Define o nome do treinador
         self.pokemon = pokemon                                                                              # Define o Pokémon do treinador
 
-    def batalhar(self, cenario: 'Cenario') -> None:                                                         # Define o método de batalha do treinador
+    def batalhar(self, cenario: 'InterfaceCenario') -> None:                                                         # Define o método de batalha do treinador
         """
         :param cenario: Instância da classe Cenario, representando o cenário da batalha
         """
