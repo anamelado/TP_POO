@@ -1,6 +1,7 @@
 import random                                                                                                       # Importa o módulo random para gerar números aleatórios
 from pokemon import Pokemon                                                                                         # Importa a classe Pokemon do arquivo pokemon.py
 from typing import TYPE_CHECKING, Type
+from InterfaceCenario import InterfaceCenario
 
 if TYPE_CHECKING:
     from trainer import Trainer
@@ -20,7 +21,7 @@ pokemons_inimigos =            [                                                
             Pokemon("Jolteon", 50, "7", "Elétrico"),
             Pokemon("Lapras", 50, "7", "Gelo")
         ]
-class Cenario:                                                                            
+class Cenario(InterfaceCenario):                                                                            
 
     def __init__(self, nome_treinador: str) -> None:
         """
@@ -105,4 +106,3 @@ class Cenario:
             print(f"\nTodos os inimigos foram derrotados. Parabéns! \nVitória de {self.usuario.nome}")
         else:
             print("Erro. Fim de jogo.")
-

@@ -1,8 +1,10 @@
-from typing import Dict, Tuple                                                                          # Importa Dict e Tuple do módulo typing
+from typing import Dict, Tuple   
+from InterfaceAtaque import InterfaceAtaques                                                                       # Importa Dict e Tuple do módulo typing
 
-class Ataques():                                                                                        # Define a classe Ataques
+class Ataques(InterfaceAtaques):                                                                                        # Define a classe Ataques
 
-    multiplicador: Dict[Tuple[str, str], float] = {                                                     # Define um dicionário que mapeia tuplas de tipos de ataques para um fator de multiplicação
+# Define um dicionário que mapeia tuplas de tipos de ataques para um fator de multiplicação
+    multiplicador: Dict[Tuple[str, str], float] = {
         ('Elétrico', 'Água'): 2.0,
         ('Elétrico', 'Pedra'): 0.5,
         ('Fogo', 'Gelo'): 2.0,
@@ -16,25 +18,16 @@ class Ataques():                                                                
     }
 
     def __init__(self, tipo: str) -> None:                                                              # Define o método de inicialização da classe Ataques
-        """
-        :param tipo: Tipo do ataque (Elétrico, Água, Fogo, Pedra, Gelo)
-        """
         self.atk_nome = ''                                                                              # Inicializa o nome do ataque como uma string vazia
         self.forca = 0                                                                                  # Inicializa a força do ataque como 0
         self.__tipo = tipo                                                                              # Define o tipo de ataque (com o prefixo "__" para indicar que é privado)
         self.definir_ataque()                                                                           # Chama o método definir_ataque para configurar o nome e a força do ataque
 
     @property                                                                                           # Define um método getter (propriedade) para acessar o tipo de ataque
-    def tipo(self) -> str:
-        """
-        :return: Retorna o tipo de ataque (atributo privado)
-        """
+    def tipo(self):
         return self.__tipo                                                                              # Retorna o tipo de ataque
     
     def definir_ataque(self) -> None:                                                                   # Define o método definir_ataque
-        """
-        Configura o nome e a força do ataque com base no tipo de ataque.
-        """
         if self.tipo == 'Elétrico':                                                                     # Se o tipo de ataque for elétrico
             self.atk_nome = 'Choque do trovão'                                                          # Define o nome do ataque como "Choque do trovão"
             self.forca = 10                                                                             # Define a força do ataque como 
